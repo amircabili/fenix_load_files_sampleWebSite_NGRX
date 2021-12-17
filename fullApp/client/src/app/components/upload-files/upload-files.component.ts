@@ -30,21 +30,28 @@ export class UploadFilesComponent implements OnInit {
   base64Output : string | undefined  = "";
 
   onTextValueClick(){
-    this.buttons = document.querySelectorAll('.fileByText');
-    let clickedValue;
-
-    [...this.buttons].forEach(item => {
-        clickedValue = item.value;
-        console.log(clickedValue);
-    });
     // @ts-ignore
-    this.convertFile(clickedValue.toString()).subscribe((base64: string | undefined) => {
-      this.base64Output = "";
-      this.base64Output = base64;
-    });
-    this.btnUpload();
-  }
+    this.buttons = document.getElementById('fileByText').value;
+    let clickedValue;
+    debugger;
+        // @ts-ignore
+    clickedValue = this.buttons
+        console.log(clickedValue);
 
+
+    let encodedString = btoa(clickedValue);
+    console.log(encodedString); // Outputs: "SGVsbG8gV29ybGQh"
+      this.base64Output = "";
+      this.base64Output = encodedString;
+    this.btnUpload();
+
+    // @ts-ignore
+    // this.convertFile(clickedValue).subscribe((base64: string | undefined) => {
+    //   this.base64Output = "";
+    //   this.base64Output = base64;
+    // });
+    // this.btnUpload();
+  }
 
   onFileSelected(event: { target: any }) {
     this.convertFile(event.target.files[0]).subscribe((base64: string | undefined) => {
