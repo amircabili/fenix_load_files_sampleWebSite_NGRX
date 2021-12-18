@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable, Observer, Subscription} from 'rxjs';
 import { GetFilesService } from '../../services/get-files.service'
 import {Store} from "@ngrx/store";
 import { baseFile } from '../../models/baseFile.model';
@@ -13,7 +13,7 @@ export class ListFilesComponent implements OnInit {
   public filesData: any;
   public count: Observable<any> | undefined;
   public fileName: Observable<any> | undefined;
-
+  public getFilesServiceObserver : Subscription | undefined
   public  subscription;
   public files : Observable<baseFile[]> | undefined;
   public fileCounter: number | undefined
@@ -31,7 +31,7 @@ export class ListFilesComponent implements OnInit {
   loadData(){
     // this.fileCounter = this.files.length
 
-    this.getFilesService.getFilesData()
+    this.getFilesServiceObserver = this.getFilesService.getFilesData()
     .subscribe(
       (res: any)=>
         {
@@ -72,9 +72,9 @@ export class ListFilesComponent implements OnInit {
             // @ts-ignore
              var text: String | undefined ="";
              var filename: String | undefined ="";
-              text = file.ImageBaseData;
-             console.log(file.ImageBaseData);
-             filename = file.ImageBaseData;
+              text = file.fileName;
+
+             filename = file.fileName;
 
             this.download(filename, text);
       }

@@ -1,6 +1,20 @@
 .listFilesComp{
+  background: #b9b9b9;
+  border: solid 1px gray;
+.btn.colorBlueFun{
+  background: #2afefa !important;
+  color: black;
+  font-weight: bold;
+}
+  .topCounter{
+    text-align: right !important;
+    position: absolute;
+    right: 0;
+    top: -30px;
+  }
+
 table{
-  background: lightgray;
+  background: #e1e1e1;
   border: solid 1px #8d8d8d;
 }
   .numOfFiles{
@@ -15,7 +29,8 @@ table{
     text-align: center;
     font-size: 21px;
     color: white;
-    top: 20px;
+    top: 11px;
+    right: -7px;
     border: solid black 1px;
 
     .redWrapper{

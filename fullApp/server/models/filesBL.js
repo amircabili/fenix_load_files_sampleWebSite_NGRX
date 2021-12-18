@@ -10,8 +10,8 @@
  
 const createFile = async function(obj)
 {
-        let resp = await jsonDAL.saveFile(obj)
-        return "Created";
+    let resp = await jsonDAL.saveFile(obj)
+    return "Created";
 }
 
 module.exports = {getFiles, createFile}

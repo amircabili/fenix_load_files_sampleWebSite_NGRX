@@ -10,13 +10,10 @@ router.get('/',async (req, res)=> {
 })
 
 router.post('/addFile', async function(req, res, next) {
-debugger;
-
- 
       let status = await filesBL.createFile(req.body)
+      console.log("req.body - " + JSON.stringify(req.body));
       console.log(status);
       res.send('File Created');
-  
   });
 
   

@@ -15,7 +15,9 @@ export class UploadFilesComponent implements OnInit {
 
   title = 'FileUploadProject';
   ImageBaseData: string | ArrayBuffer | null   = "";
-  private buttons: any;
+  fileName: string | undefined
+  private fileByTextButton: any;
+  private fileByChooseButton: any;
 
   constructor(
     private http:HttpClient,
@@ -31,29 +33,21 @@ export class UploadFilesComponent implements OnInit {
 
   onTextValueClick(){
     // @ts-ignore
-    this.buttons = document.getElementById('fileByText').value;
+    this.fileByTextButton = document.getElementById('fileByText').value;
     let clickedValue;
-    debugger;
-        // @ts-ignore
-    clickedValue = this.buttons
-        console.log(clickedValue);
+    clickedValue = this.fileByTextButton
 
-
+    this.fileName = clickedValue;
     let encodedString = btoa(clickedValue);
-    console.log(encodedString); // Outputs: "SGVsbG8gV29ybGQh"
+
       this.base64Output = "";
       this.base64Output = encodedString;
     this.btnUpload();
 
-    // @ts-ignore
-    // this.convertFile(clickedValue).subscribe((base64: string | undefined) => {
-    //   this.base64Output = "";
-    //   this.base64Output = base64;
-    // });
-    // this.btnUpload();
   }
 
   onFileSelected(event: { target: any }) {
+
     this.convertFile(event.target.files[0]).subscribe((base64: string | undefined) => {
       this.base64Output = "";
       this.base64Output = base64;
@@ -62,9 +56,12 @@ export class UploadFilesComponent implements OnInit {
   }
 
   convertFile(file : File) : Observable<string> {
+
     const result = new ReplaySubject<string>(1);
     const reader = new FileReader();
     reader.readAsBinaryString(file);
+
+    this.fileName = file.name;
     reader.onload = (event) => result.next(btoa(event.loaded.toString()));
 
     return result;
@@ -75,6 +72,7 @@ export class UploadFilesComponent implements OnInit {
       alert("Please select file");
     }else{this.getFilesService.updateFiles();
       var fileUplodVM: FileUplodVM={
+        fileName:this.fileName,
         ImageBaseData:this.base64Output.toString()
       }
       this.CreateItem(fileUplodVM).subscribe((res: any) =>{
@@ -86,12 +84,14 @@ export class UploadFilesComponent implements OnInit {
       } );
       this.getFilesService.updateFiles();
       this.addStateData(fileUplodVM.ImageBaseData);
+      alert("Successfully uploded file");
     }
   }
 
   addStateData(ImageBaseDataValue: String | undefined)
   {
     let newFile = new baseFile();
+    newFile.fileName = this.fileName;
     newFile.ImageBaseData = ImageBaseDataValue;
     this.store.dispatch({type : 'ADD', payload : newFile});
   }
@@ -108,5 +108,6 @@ export class UploadFilesComponent implements OnInit {
 
 
 export class FileUplodVM{
-  ImageBaseData: string | undefined;
+  fileName: String | undefined;
+  ImageBaseData: String | undefined;
 }

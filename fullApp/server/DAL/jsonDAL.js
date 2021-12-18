@@ -18,12 +18,13 @@ const getFiles = function()
      })
  }
 
+
  const saveFile = function(obj)
 {
     return new Promise((resolve,reject) =>
     {
-        debugger;
-        jsonfile.writeFile(__dirname + "/files.json",obj,function(err)
+
+        jsonfile.writeFileSync(__dirname + "/files.json",obj, function(err)
         {
             if(err)
             {
