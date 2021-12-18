@@ -57,25 +57,17 @@ export class ListFilesComponent implements OnInit {
     if (typeof file === "string") {
       element.setAttribute('download', file);
     }
-        // Above code is equivalent to
-        // <a href="path of file" download="file name">
         document.body.appendChild(element);
-        //onClick property
         element.click();
         document.body.removeChild(element);
   }
 
   // Start file download.
   clickOnRow(file: baseFile) {
-            // Generate download of hello.txt
-            // file with some content
-            // @ts-ignore
              var text: String | undefined ="";
              var filename: String | undefined ="";
               text = file.fileName;
-
              filename = file.fileName;
-
             this.download(filename, text);
       }
 

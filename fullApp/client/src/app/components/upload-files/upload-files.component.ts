@@ -17,7 +17,6 @@ export class UploadFilesComponent implements OnInit {
   ImageBaseData: string | ArrayBuffer | null   = "";
   fileName: string | undefined
   private fileByTextButton: any;
-  private fileByChooseButton: any;
 
   constructor(
     private http:HttpClient,
@@ -28,7 +27,6 @@ export class UploadFilesComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
   base64Output : string | undefined  = "";
 
   onTextValueClick(){
@@ -39,7 +37,6 @@ export class UploadFilesComponent implements OnInit {
 
     this.fileName = clickedValue;
     let encodedString = btoa(clickedValue);
-
       this.base64Output = "";
       this.base64Output = encodedString;
     this.btnUpload();
@@ -47,7 +44,6 @@ export class UploadFilesComponent implements OnInit {
   }
 
   onFileSelected(event: { target: any }) {
-
     this.convertFile(event.target.files[0]).subscribe((base64: string | undefined) => {
       this.base64Output = "";
       this.base64Output = base64;
@@ -56,14 +52,11 @@ export class UploadFilesComponent implements OnInit {
   }
 
   convertFile(file : File) : Observable<string> {
-
     const result = new ReplaySubject<string>(1);
     const reader = new FileReader();
     reader.readAsBinaryString(file);
-
     this.fileName = file.name;
     reader.onload = (event) => result.next(btoa(event.loaded.toString()));
-
     return result;
   }
 
@@ -77,9 +70,9 @@ export class UploadFilesComponent implements OnInit {
       }
       this.CreateItem(fileUplodVM).subscribe((res: any) =>{
         if(res){
-          alert("Successfully uploded file");
+
         }else{
-          alert("File upload failed");
+
         }
       } );
       this.getFilesService.updateFiles();
